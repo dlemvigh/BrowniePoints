@@ -1,12 +1,11 @@
 import React from "react";
-//import styles from "./Action.module.scss"
 
-const Action = ({ user, name, score, onAddScore }) => (
+const Action = ({ name, score, onAddScore }) => (
   <button 
     type="button" 
-    onClick={() => onAddScore(user, score)}
+    onClick={() => onAddScore(score)}
     className={"btn btn-primary"}
->+{score} {name}</button>
+  >+{score} {name}</button>
 );
 
 export default Action;
