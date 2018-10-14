@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import Person from "./Components/Person";
 import './customization.scss';
 
@@ -17,9 +16,21 @@ class App extends Component {
     const scores = JSON.parse( localStorage.getItem("score") );
     this.state = {
       scores: scores ||   {
-        Tine: 1000,
-        Anders: 100,
-        Daniel: 40
+        Tine: 291,
+        Anders: 116,
+        Daniel: -19
+      },
+      users: {
+        Tine: {
+          isActive: true,
+          color: "orange",
+        },
+        Anders: {
+          color: "purple"
+        },
+        Daniel: {
+          color: "teal"
+        }
       }
     }
   }
@@ -38,7 +49,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           { users.map(user =>
-            <Person key={user} name={user} score={this.state.scores[user]} actions={actions} onAddScore={this.handleAddScore} />  
+            <Person key={user} user={this.state.users[user]} name={user} score={this.state.scores[user]} actions={actions} onAddScore={this.handleAddScore} />  
           )}
         </header>
       </div>
