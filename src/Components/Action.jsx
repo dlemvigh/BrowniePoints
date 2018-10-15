@@ -5,7 +5,7 @@ const Action = ({ name, score, onAddScore }) => (
     type="button" 
     onClick={() => onAddScore(score)}
     className={"btn btn-primary"}
-  >+{score} {name}</button>
+  >{score > 0 && "+"}{score} {name}</button>
 );
 
 export default Action;

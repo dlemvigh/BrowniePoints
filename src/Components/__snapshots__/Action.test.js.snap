@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot, negative score 1`] = `
+<button
+  className="btn btn-primary"
+  onClick={[Function]}
+  type="button"
+>
+  -200
+   
+  Amusement park
+</button>
+`;
+
+exports[`matches snapshot, positive score 1`] = `
+<button
+  className="btn btn-primary"
+  onClick={[Function]}
+  type="button"
+>
+  +
+  10
+   
+  Do dishes
+</button>
+`;
