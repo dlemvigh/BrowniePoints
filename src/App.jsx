@@ -3,6 +3,7 @@ import User from "./Components/User";
 import Action from "./Components/Action";
 
 import './App.css';
+// import Person from "./Components/Person";
 import './customization.scss';
 
 const actions = [
@@ -17,6 +18,10 @@ const actions = [
   {
     name: "Skrald",
     score: 10
+  },
+  {
+    name: "Test",
+    score: 1
   }
 ]
 
@@ -72,6 +77,7 @@ class App extends Component {
 
   render() {
     const users = Object.keys(this.state.users)
+    const hasSelected = users.some(user => this.state.selected[user]);
     return (
       <div className="App">
         <header className="App-header">
@@ -84,7 +90,7 @@ class App extends Component {
               onSelect={this.handleSelect}
             />
           )}
-          {actions.map(action =>
+          {hasSelected && actions.map(action =>
             <Action key={action.name} {...action} onAddScore={this.handleAddScore} />
           )}
         </header>

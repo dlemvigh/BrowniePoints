@@ -1,0 +1,19 @@
+.container {
+    border: 5px solid #999;
+    border-radius: 20px; 
+    padding: 1rem;
+    margin: 1rem;
+    width: 70%;
+}
+
+.user {
+    float: left;
+}
+
+.score {
+    float: right;
+}
+
+.content {
+    clear: both;
+}
