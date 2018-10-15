@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
+import ActionContainer from "./Components/ActionContainer";
 import User from "./Components/User";
-import Action from "./Components/Action";
 
-import './App.css';
-// import Person from "./Components/Person";
+import styles from "./App.module.scss";
 import './customization.scss';
 
 const actions = [
@@ -20,8 +19,8 @@ const actions = [
     score: 10
   },
   {
-    name: "Test",
-    score: 1
+    name: "Tivoli",
+    score: -200
   }
 ]
 
@@ -79,8 +78,8 @@ class App extends Component {
     const users = Object.keys(this.state.users)
     const hasSelected = users.some(user => this.state.selected[user]);
     return (
-      <div className="App">
-        <header className="App-header">
+      <>
+        <div className={styles.users}>
           {users.map(user =>
             <User
               key={user}
@@ -90,11 +89,11 @@ class App extends Component {
               onSelect={this.handleSelect}
             />
           )}
-          {hasSelected && actions.map(action =>
-            <Action key={action.name} {...action} onAddScore={this.handleAddScore} />
-          )}
-        </header>
-      </div>
+        </div>
+        <div className={styles.actions}>
+          <ActionContainer hasSelected={hasSelected} actions={actions} onAddScore={this.handleAddScore} />
+        </div>
+      </>
     );
   }
 }

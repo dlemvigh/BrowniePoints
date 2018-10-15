@@ -1,0 +1,14 @@
+.noSelected {
+  border: 5px solid #999;
+  border-radius: 20px; 
+  border-style: dashed;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.hasSelected {
+  margin: 1rem;
+  button + button {
+    margin-top: 1rem;
+  }
+}
