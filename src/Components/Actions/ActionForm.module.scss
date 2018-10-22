@@ -7,7 +7,17 @@
 
 .score {
   text-align: right;
-  width: 5rem !important;
+  width: 3rem !important;
+
+  &::-webkit-inner-spin-button, 
+  &::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+  }
+}
+
+.name {
+  width: 10rem !important;  
 }
 
 .chevron {

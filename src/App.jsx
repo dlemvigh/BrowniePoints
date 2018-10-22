@@ -1,25 +1,29 @@
 import React, { Component } from 'react';
 import ActionContainer from "./Components/Actions/ActionContainer";
-import ActionForm from "./Components/Actions/ActionForm";
 import User from "./Components/User";
+import { newid } from "./util";
 
 import styles from "./App.module.scss";
 import './customization.scss';
 
 const defaultActions = [
   {
+    id: newid(),
     name: "Opvask",
     score: 10
   },
   {
+    id: newid(),
     name: "Læs bog",
     score: 5
   },
   {
+    id: newid(),
     name: "Skrald",
     score: 10
   },
   {
+    id: newid(),
     name: "Tivoli",
     score: -200
   }
@@ -49,7 +53,7 @@ class AppContainer extends Component {
       actions: actions || defaultActions,
       users: users || defaultUsers,
       selected: {},
-      editing: false
+      editing: true
     }
   }
 
@@ -100,17 +104,17 @@ class AppContainer extends Component {
 const App = (props) => {
   const users = Object.keys(props.users)
   const hasSelected = users.some(user => props.selected[user]);
-  if (props.editing) {
-    return (
-      <>
-        <div className={styles.main}>
-          <ActionForm actions={props.actions} onSaveActions={props.handleSaveActions} onStopEditing={props.handleStopEditing} />
-        </div>
-        <div className={styles.aside}>
-        </div>
-      </>
-    )
-  } else {
+  // if (props.editing) {
+  //   return (
+  //     <>
+  //       <div className={styles.main}>
+  //         <ActionForm actions={props.actions} onSaveActions={props.handleSaveActions} onStopEditing={props.handleStopEditing} />
+  //       </div>
+  //       <div className={styles.aside}>
+  //       </div>
+  //     </>
+  //   )
+  // } else {
     return (
       <>      
         <div className={styles.main}>
@@ -125,11 +129,19 @@ const App = (props) => {
           )}
         </div>
         <div className={styles.aside}>
-          <ActionContainer hasSelected={hasSelected} actions={props.actions} onAddScore={props.handleAddScore} onStartEditing={props.handleStartEditing} />
+          <ActionContainer 
+            hasSelected={hasSelected} 
+            actions={props.actions} 
+            onAddScore={props.handleAddScore}
+            editing={props.editing}
+            onStartEditing={props.handleStartEditing} 
+            onSaveActions={props.handleSaveActions} 
+            onStopEditing={props.handleStopEditing}  
+          />
         </div>
       </>
     );
-  }
+  // }
 }
 
 export default AppContainer;

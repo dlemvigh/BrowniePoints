@@ -1,6 +1,8 @@
 import React from "react";
+import { GoChevronDown, GoChevronUp, GoTrashcan, GoPlus } from "react-icons/go";
+import { newid } from "../../util";
 import styles from "./ActionForm.module.scss";
-import { GoChevronDown, GoChevronUp, GoTrashcan } from "react-icons/go";
+
 class ActionForm extends React.Component {
 
   constructor(props) {
@@ -32,13 +34,14 @@ class ActionForm extends React.Component {
   handleAdd = () => {
     const actions = [
       ...this.state.actions,
-      { score: "0", name: "" }
+      { id: newid(), score: "0", name: "" }
     ];
     this.setState({ actions });
   }
 
   handleSubmit = event => {
     const actions = this.state.actions.map(action => ({
+      id: action.id,
       score: Number(action.score),
       name: action.name
     }));
@@ -62,7 +65,7 @@ class ActionForm extends React.Component {
           <h2>Aktiviteter</h2>
           { this.state.actions.map((action, index) => 
             <ActionEditor 
-              key={action.name} 
+              key={action.id} 
               index={index} 
               action={action} 
               first={index === 0} 
@@ -73,9 +76,10 @@ class ActionForm extends React.Component {
               onDelete={() => this.handleDelete(index)}
             />) 
           }
+          <button className="btn btn-link" type="button" onClick={this.handleAdd}><GoPlus />tilføj</button>
+          <br />
           <button className="btn btn-primary" type="submit">Gem</button>
           <button className="btn btn-link" type="button" onClick={this.props.onStopEditing}>annullér</button>
-          <button className="btn btn-link" type="button" onClick={this.handleAdd}>tilføj</button>
         </form>
       </div>
     );
@@ -89,18 +93,18 @@ const ActionEditor = (props) => (
         id={`score[${props.index}]`}
         name="score"
         type="number" 
-        className={`form-control ${styles.score} ${validateScore(props.action.score) || "is-invalid"}`} 
+        className={`form-control form-control-sm ${styles.score} ${validateScore(props.action.score) || "is-invalid"}`} 
         onChange={event => handleChange(event, props)}
         value={props.action.score} 
         required
       />
     </div>
-    <div className="form-group col-8">
+    <div className="form-group">
       <input 
         id={`name[${props.index}]`}
         name="name"
         type="text" 
-        className={`form-control ${validateName(props.action.name) || "is-invalid"}`}
+        className={`form-control form-control-sm ${styles.name} ${validateName(props.action.name) || "is-invalid"}`}
         value={props.action.name} 
         onChange={event => handleChange(event, props)}
         required
