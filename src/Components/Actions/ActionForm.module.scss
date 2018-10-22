@@ -1,0 +1,26 @@
+.container {
+  border: 5px solid #999;
+  border-radius: 20px; 
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.score {
+  text-align: right;
+  width: 5rem !important;
+}
+
+.chevron {
+  margin-top: -.5rem;
+  width: 1.4rem;
+  cursor: pointer;
+}
+
+.trash {
+  width: 1.4rem;
+  cursor: pointer;
+}
+
+.hide {
+  visibility: hidden;
+}

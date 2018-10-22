@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import ActionContainer from "./Components/ActionContainer";
+import ActionContainer from "./Components/Actions/ActionContainer";
+import ActionForm from "./Components/Actions/ActionForm";
 import User from "./Components/User";
 
 import styles from "./App.module.scss";
 import './customization.scss';
 
-const actions = [
+const defaultActions = [
   {
     name: "Opvask",
     score: 10
@@ -39,13 +40,16 @@ const defaultUsers = {
   }
 };
 
-class App extends Component {
+class AppContainer extends Component {
   constructor() {
     super();
+    const actions = JSON.parse(localStorage.getItem("actions"));
     const users = JSON.parse(localStorage.getItem("users"));
     this.state = {
+      actions: actions || defaultActions,
       users: users || defaultUsers,
-      selected: {}
+      selected: {},
+      editing: false
     }
   }
 
@@ -66,6 +70,11 @@ class App extends Component {
     localStorage.setItem("users", JSON.stringify(newUsers));
   }
 
+  handleSaveActions = (actions) => {
+    this.setState({ actions });
+    localStorage.setItem("actions", JSON.stringify(actions));
+  }
+
   handleSelect = (user) => {
     const newSelected = { ...this.state.selected }
     newSelected[user] = !newSelected[user];
@@ -73,29 +82,54 @@ class App extends Component {
       selected: newSelected
     });
   }
+  
+  handleStartEditing = () => {
+    this.setState({ editing: true });
+  }
+
+  handleStopEditing = () => {
+    this.setState({ editing: false });
+  }
 
   render() {
-    const users = Object.keys(this.state.users)
-    const hasSelected = users.some(user => this.state.selected[user]);
+    return <App {...this} {...this.state}  />;
+  }
+
+}
+
+const App = (props) => {
+  const users = Object.keys(props.users)
+  const hasSelected = users.some(user => props.selected[user]);
+  if (props.editing) {
     return (
       <>
-        <div className={styles.users}>
+        <div className={styles.main}>
+          <ActionForm actions={props.actions} onSaveActions={props.handleSaveActions} onStopEditing={props.handleStopEditing} />
+        </div>
+        <div className={styles.aside}>
+        </div>
+      </>
+    )
+  } else {
+    return (
+      <>      
+        <div className={styles.main}>
           {users.map(user =>
             <User
               key={user}
               name={user}
-              {... this.state.users[user]}
-              isSelected={this.state.selected[user]}
-              onSelect={this.handleSelect}
+              {... props.users[user]}
+              isSelected={props.selected[user]}
+              onSelect={props.handleSelect}
             />
           )}
         </div>
-        <div className={styles.actions}>
-          <ActionContainer hasSelected={hasSelected} actions={actions} onAddScore={this.handleAddScore} />
+        <div className={styles.aside}>
+          <ActionContainer hasSelected={hasSelected} actions={props.actions} onAddScore={props.handleAddScore} onStartEditing={props.handleStartEditing} />
         </div>
       </>
     );
   }
 }
 
-export default App;
+export default AppContainer;
