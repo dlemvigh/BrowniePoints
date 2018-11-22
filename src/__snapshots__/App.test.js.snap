@@ -1,33 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`matches snapshot 1`] = `
-<div
-  className="App"
->
-  <header
-    className="App-header"
+<Fragment>
+  <div
+    className="main"
   >
     <User
       color="#F05D5E"
       key="Tine"
       name="Tine"
-      onSelect={[Function]}
       score={0}
     />
     <User
       color="#1A964E"
       key="Anders"
       name="Anders"
-      onSelect={[Function]}
       score={0}
     />
     <User
       color="#85C7F2"
       key="Daniel"
       name="Daniel"
-      onSelect={[Function]}
       score={0}
     />
-  </header>
-</div>
+  </div>
+  <div
+    className="aside"
+  >
+    <ActionContainer
+      hasSelected={false}
+    />
+  </div>
+</Fragment>
 `;

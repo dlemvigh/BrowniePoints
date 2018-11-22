@@ -1,15 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { shallow } from 'enzyme';
-import App from './App';
+import { App, AppContainer, defaultUsers } from './App';
 
 it('matches snapshot', () => {
-  const wrapper = shallow(<App />);
+  const wrapper = shallow(<App users={defaultUsers} selected={{}} />);
   expect(wrapper).toMatchSnapshot();
 })
 
 it('handle select', () => {
-  const wrapper = shallow(<App />);
+  const wrapper = shallow(<AppContainer />);
   expect(wrapper.state("selected")).toEqual({});
 
   wrapper.instance().handleSelect("someName");
@@ -17,7 +16,7 @@ it('handle select', () => {
 })
 
 it('add score', () => {
-  const wrapper = shallow(<App />);
+  const wrapper = shallow(<AppContainer />);
   expect(wrapper.state("users").Daniel.score).toBe(0);
 
   const instance = wrapper.instance();

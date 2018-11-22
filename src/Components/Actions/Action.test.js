@@ -14,8 +14,9 @@ it('matches snapshot, negative score', () => {
 
 it('triggers callback', () => {
   const score = 1;
+  const name = "test";
   const callback = jest.fn();
-  const wrapper = shallow(<Action onAddScore={callback} score={score} />);
+  const wrapper = shallow(<Action onAddScore={callback} score={score} name={name} />);
 
   expect(callback.mock.calls.length).toBe(0);
 
@@ -23,5 +24,5 @@ it('triggers callback', () => {
   button.simulate("click");
 
   expect(callback.mock.calls.length).toBe(1);
-  expect(callback.mock.calls[0]).toEqual([score]);
+  expect(callback.mock.calls[0]).toEqual([score, name]);
 })

@@ -6,7 +6,7 @@ import { newid } from "./util";
 import styles from "./App.module.scss";
 import './customization.scss';
 
-const defaultActions = [
+export const defaultActions = [
   {
     id: newid(),
     name: "Opvask",
@@ -29,7 +29,7 @@ const defaultActions = [
   }
 ]
 
-const defaultUsers = {
+export const defaultUsers = {
   Tine: {
     score: 0,
     color: "#F05D5E"
@@ -44,7 +44,7 @@ const defaultUsers = {
   }
 };
 
-class AppContainer extends Component {
+export class AppContainer extends Component {
   constructor() {
     super();
     const actions = JSON.parse(localStorage.getItem("actions"));
@@ -53,25 +53,32 @@ class AppContainer extends Component {
       actions: actions || defaultActions,
       users: users || defaultUsers,
       selected: {},
-      editing: true
+      editing: false
     }
   }
 
-  handleAddScore = (score) => {
+  handleAddScore = (score, name) => {
     const newUsers = { ...this.state.users };
     const users = Object.keys(this.state.selected);
+    const log = JSON.parse(localStorage.getItem("log")) || {};
+    const date = new Date();
+
     users.forEach(user => {
       const selected = this.state.selected[user];
       if (selected) {
         const newUser = { ...newUsers[user] };
         newUser.score += score;
         newUsers[user] = newUser;
+        const userLog = log[user] || [];
+        userLog.push({ name, score, date });
+        log[user] = userLog;
       }
     });
     this.setState({
       users: newUsers
     });
     localStorage.setItem("users", JSON.stringify(newUsers));
+    localStorage.setItem("log", JSON.stringify(log));
   }
 
   handleSaveActions = (actions) => {
@@ -101,47 +108,36 @@ class AppContainer extends Component {
 
 }
 
-const App = (props) => {
+export const App = (props) => {
   const users = Object.keys(props.users)
   const hasSelected = users.some(user => props.selected[user]);
-  // if (props.editing) {
-  //   return (
-  //     <>
-  //       <div className={styles.main}>
-  //         <ActionForm actions={props.actions} onSaveActions={props.handleSaveActions} onStopEditing={props.handleStopEditing} />
-  //       </div>
-  //       <div className={styles.aside}>
-  //       </div>
-  //     </>
-  //   )
-  // } else {
-    return (
-      <>      
-        <div className={styles.main}>
-          {users.map(user =>
-            <User
-              key={user}
-              name={user}
-              {... props.users[user]}
-              isSelected={props.selected[user]}
-              onSelect={props.handleSelect}
-            />
-          )}
-        </div>
-        <div className={styles.aside}>
-          <ActionContainer 
-            hasSelected={hasSelected} 
-            actions={props.actions} 
-            onAddScore={props.handleAddScore}
-            editing={props.editing}
-            onStartEditing={props.handleStartEditing} 
-            onSaveActions={props.handleSaveActions} 
-            onStopEditing={props.handleStopEditing}  
+
+  return (
+    <>
+      <div className={styles.main}>
+        {users.map(user =>
+          <User
+            key={user}
+            name={user}
+            {... props.users[user]}
+            isSelected={props.selected[user]}
+            onSelect={props.handleSelect}
           />
-        </div>
-      </>
-    );
-  // }
+        )}
+      </div>
+      <div className={styles.aside}>
+        <ActionContainer 
+          hasSelected={hasSelected} 
+          actions={props.actions} 
+          onAddScore={props.handleAddScore}
+          editing={props.editing}
+          onStartEditing={props.handleStartEditing} 
+          onSaveActions={props.handleSaveActions} 
+          onStopEditing={props.handleStopEditing}  
+        />
+      </div>
+    </>
+  );
 }
 
 export default AppContainer;

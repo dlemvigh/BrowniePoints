@@ -2,7 +2,7 @@
 
 exports[`matches snapshot, negative score 1`] = `
 <button
-  className="btn btn-primary"
+  className="btn btn-danger action"
   onClick={[Function]}
   type="button"
 >
@@ -14,7 +14,7 @@ exports[`matches snapshot, negative score 1`] = `
 
 exports[`matches snapshot, positive score 1`] = `
 <button
-  className="btn btn-primary"
+  className="btn btn-success action"
   onClick={[Function]}
   type="button"
 >
