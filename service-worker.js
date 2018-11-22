@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.2/workbox-sw.js");
 
 importScripts(
-  "/BrowniePoints/precache-manifest.8eb89544e34af12126020f74d8b452e5.js"
+  "/BrowniePoints/precache-manifest.d7b2970996c9e76357699a3143c8922e.js"
 );
 
 workbox.clientsClaim();
