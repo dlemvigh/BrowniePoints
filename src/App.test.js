@@ -26,4 +26,7 @@ it('add score', () => {
   instance.handleSelect("Daniel");
   instance.handleAddScore(20);
   expect(wrapper.state("users").Daniel.score).toBe(20);
+
+  const log = JSON.parse(localStorage.log);
+  expect(log["Daniel"]).toHaveLength(1);
 })

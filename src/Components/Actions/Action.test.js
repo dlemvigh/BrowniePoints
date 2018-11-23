@@ -18,11 +18,11 @@ it('triggers callback', () => {
   const callback = jest.fn();
   const wrapper = shallow(<Action onAddScore={callback} score={score} name={name} />);
 
-  expect(callback.mock.calls.length).toBe(0);
+  expect(callback).not.toHaveBeenCalled();
 
   const button = wrapper.find("button");
   button.simulate("click");
 
-  expect(callback.mock.calls.length).toBe(1);
-  expect(callback.mock.calls[0]).toEqual([score, name]);
+  expect(callback).toHaveBeenCalled();
+  expect(callback).toHaveBeenCalledWith(score, name);
 })
